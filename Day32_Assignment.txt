@@ -1,0 +1,221 @@
+mysql> create database addressbook_service;
+Query OK, 1 row affected (0.00 sec)
+mysql> show databases;
++---------------------+
+| Database            |
++---------------------+
+| information_schema  |
+| addressbook_service |
+| mysql               |
+| payroll_service     |
+| sampledb            |
+| test                |
++---------------------+
+6 rows in set (0.00 sec)
+
+mysql> use addressbook_service;
+Database changed
+mysql> desc address_book;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int(11)      | NO   | PRI | NULL    | auto_increment |
+| first_name   | varchar(150) | NO   |     |         |                |
+| last_name    | varchar(150) | NO   |     |         |                |
+| city         | varchar(150) | NO   |     |         |                |
+| state        | varchar(150) | YES  |     | NULL    |                |
+| pin          | varchar(50)  | NO   |     |         |                |
+| phone_number | varchar(50)  | NO   |     |         |                |
+| email        | varchar(150) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+8 rows in set (0.01 sec)
+mysql> insert into address_book(id,first_name,last_name,city,state,pin,phone_number,email) values
+    -> (101,'ajith','kumar','pennagaram','Tamilnadu','6368152','741258963','ajith@gmail.com'),
+    -> (102,'praveen','M','bangalore','karnataka','5600258','852147963','praveen@gmail.com'),
+    -> (103,'naveen','s','dharasahalli','karanataka','56004175','963258741','naveen@gmail.com');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> select * from address_book;
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+| id  | first_name | last_name | city         | state      | pin      | phone_number | email             |
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+| 101 | ajith      | kumar     | pennagaram   | Tamilnadu  | 6368152  | 741258963    | ajith@gmail.com   |
+| 102 | praveen    | M         | bangalore    | karnataka  | 5600258  | 852147963    | praveen@gmail.com |
+| 103 | naveen     | s         | dharasahalli | karanataka | 56004175 | 963258741    | naveen@gmail.com  |
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into address_book(first_name,last_name,city,state,pin,phone_number,email)values
+    -> ('vijay','M','rtrnagar','karnataka','5623014','875421369','vijay@gmail.com'),
+    -> ('hatim','karma','mumbai','maharastra','1002365','6325649715','hatim@gmail.com');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+| id  | first_name | last_name | city         | state      | pin      | phone_number | email             |
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+| 101 | ajith      | kumar     | pennagaram   | Tamilnadu  | 6368152  | 741258963    | ajith@gmail.com   |
+| 102 | praveen    | M         | bangalore    | karnataka  | 5600258  | 852147963    | praveen@gmail.com |
+| 103 | naveen     | s         | dharasahalli | karanataka | 56004175 | 963258741    | naveen@gmail.com  |
+| 104 | vijay      | M         | rtrnagar     | karnataka  | 5623014  | 875421369    | vijay@gmail.com   |
+| 105 | hatim      | karma     | mumbai       | maharastra | 1002365  | 6325649715   | hatim@gmail.com   |
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+5 rows in set (0.00 sec)
+mysql> update address_book set last_name='sudhakar' where first_name='naveen';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+| id  | first_name | last_name | city         | state      | pin      | phone_number | email             |
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+| 101 | ajith      | kumar     | pennagaram   | Tamilnadu  | 6368152  | 741258963    | ajith@gmail.com   |
+| 102 | praveen    | M         | bangalore    | karnataka  | 5600258  | 852147963    | praveen@gmail.com |
+| 103 | naveen     | sudhakar  | dharasahalli | karanataka | 56004175 | 963258741    | naveen@gmail.com  |
+| 104 | vijay      | M         | rtrnagar     | karnataka  | 5623014  | 875421369    | vijay@gmail.com   |
+| 105 | hatim      | karma     | mumbai       | maharastra | 1002365  | 6325649715   | hatim@gmail.com   |
++-----+------------+-----------+--------------+------------+----------+--------------+-------------------+
+5 rows in set (0.00 sec)
+mysql> delete from address_book where first_name='praveen';
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from address_book;
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+
+| id  | first_name | last_name | city         | state      | pin      | phone_number | email            |
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+
+| 101 | ajith      | kumar     | pennagaram   | Tamilnadu  | 6368152  | 741258963    | ajith@gmail.com  |
+| 103 | naveen     | sudhakar  | dharasahalli | karanataka | 56004175 | 963258741    | naveen@gmail.com |
+| 104 | vijay      | M         | rtrnagar     | karnataka  | 5623014  | 875421369    | vijay@gmail.com  |
+| 105 | hatim      | karma     | mumbai       | maharastra | 1002365  | 6325649715   | hatim@gmail.com  |
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+
+4 rows in set (0.00 sec)
+mysql> select * from address_book where state ='karnataka';
++-----+------------+-----------+--------------+-----------+----------+--------------+------------------+
+| id  | first_name | last_name | city         | state     | pin      | phone_number | email            |
++-----+------------+-----------+--------------+-----------+----------+--------------+------------------+
+| 103 | naveen     | sudhakar  | dharasahalli | karnataka | 56004175 | 963258741    | naveen@gmail.com |
+| 104 | vijay      | M         | rtrnagar     | karnataka | 5623014  | 875421369    | vijay@gmail.com  |
++-----+------------+-----------+--------------+-----------+----------+--------------+------------------+
+2 rows in set (0.00 sec)
+mysql> select count(first_name) as Count from address_book;
++-------+
+| Count |
++-------+
+|     4 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select first_name,city from address_book order by first_name asc;
++------------+--------------+
+| first_name | city         |
++------------+--------------+
+| ajith      | pennagaram   |
+| hatim      | mumbai       |
+| naveen     | dharasahalli |
+| vijay      | rtrnagar     |
++------------+--------------+
+4 rows in set (0.00 sec)
+mysql> create table BangaloreCity as select * from address_book where city ='bangalore';
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from BangaloreCity;
++-----+------------+-----------+-----------+-----------+--------+--------------+------------------+
+| id  | first_name | last_name | city      | state     | pin    | phone_number | email            |
++-----+------------+-----------+-----------+-----------+--------+--------------+------------------+
+| 106 | sakthi     | varma     | bangalore | karnataka | 560004 | 6565254369   | sakthi@gmail.com |
+| 107 | guna       | sekaran   | bangalore | karnataka | 560009 | 936582147    | guna@gmail.com   |
++-----+------------+-----------+-----------+-----------+--------+--------------+------------------+
+2 rows in set (0.00 sec)
+mysql> show tables;
++-------------------------------+
+| Tables_in_addressbook_service |
++-------------------------------+
+| address_book                  |
+| bangalorecity                 |
++-------------------------------+
+2 rows in set (0.00 sec)
+mysql> alter table address_book add column book_name varchar(150);
+Query OK, 6 rows affected (0.10 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> alter table address_book add column book_type varchar(150);
+Query OK, 6 rows affected (0.07 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+-----------+-----------+
+| id  | first_name | last_name | city         | state      | pin      | phone_number | email            | book_name | book_type |
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+-----------+-----------+
+| 101 | ajith      | kumar     | pennagaram   | Tamilnadu  | 6368152  | 741258963    | ajith@gmail.com  | NULL      | NULL      |
+| 103 | naveen     | sudhakar  | dharasahalli | karnataka  | 56004175 | 963258741    | naveen@gmail.com | NULL      | NULL      |
+| 104 | vijay      | M         | rtrnagar     | karnataka  | 5623014  | 875421369    | vijay@gmail.com  | NULL      | NULL      |
+| 105 | hatim      | karma     | mumbai       | maharastra | 1002365  | 6325649715   | hatim@gmail.com  | NULL      | NULL      |
+| 106 | sakthi     | varma     | bangalore    | karnataka  | 560004   | 6565254369   | sakthi@gmail.com | NULL      | NULL      |
+| 107 | guna       | sekaran   | bangalore    | karnataka  | 560009   | 936582147    | guna@gmail.com   | NULL      | NULL      |
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> update address_book set book_name='AddBook1',book_type='Family' where first_name='ajith';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set book_name='AddBook1',book_type='Friends' where first_name='naveen';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set book_name='AddBook2',book_type='Friends' where first_name='vijay';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set book_name='AddBook3',book_type='Professinal' where first_name='hatim';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set book_name='AddBook4',book_type='Professinal' where first_name='sakthi';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update address_book set book_name='AddBook2',book_type='Professinal' where first_name='guna';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+-----------+-------------+
+| id  | first_name | last_name | city         | state      | pin      | phone_number | email            | book_name | book_type   |
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+-----------+-------------+
+| 101 | ajith      | kumar     | pennagaram   | Tamilnadu  | 6368152  | 741258963    | ajith@gmail.com  | AddBook1  | Family      |
+| 103 | naveen     | sudhakar  | dharasahalli | karnataka  | 56004175 | 963258741    | naveen@gmail.com | AddBook1  | Friends     |
+| 104 | vijay      | M         | rtrnagar     | karnataka  | 5623014  | 875421369    | vijay@gmail.com  | AddBook2  | Friends     |
+| 105 | hatim      | karma     | mumbai       | maharastra | 1002365  | 6325649715   | hatim@gmail.com  | AddBook3  | Professinal |
+| 106 | sakthi     | varma     | bangalore    | karnataka  | 560004   | 6565254369   | sakthi@gmail.com | AddBook4  | Professinal |
+| 107 | guna       | sekaran   | bangalore    | karnataka  | 560009   | 936582147    | guna@gmail.com   | AddBook2  | Professinal |
++-----+------------+-----------+--------------+------------+----------+--------------+------------------+-----------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(first_name) as FamilyCount from address_book where book_type='family';
++-------------+
+| FamilyCount |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(first_name) as FamilyCount from address_book where book_type='friends';
++-------------+
+| FamilyCount |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(first_name) as FamilyCount from address_book where book_type='professinal';
++-------------+
+| FamilyCount |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
